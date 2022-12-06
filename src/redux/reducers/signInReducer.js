@@ -1,5 +1,4 @@
 import { createReducer } from "@reduxjs/toolkit";
-import swal from "sweetalert";
 import signInActions from "../actions/signInActions"
 const {sendData,resendData, signout}=signInActions;
 
