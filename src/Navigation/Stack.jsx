@@ -7,8 +7,8 @@ const StackNav = createNativeStackNavigator();
 export default function Stack() {
   return (
     <StackNav.Navigator>
-      <StackNav.Screen name="Cities" component={Cities} />
       <StackNav.Screen name="Home" component={Home} />
+      <StackNav.Screen name="Cities" component={Cities} />
       <StackNav.Screen name="Hotels" component={Hotels} />
     </StackNav.Navigator>
   )
