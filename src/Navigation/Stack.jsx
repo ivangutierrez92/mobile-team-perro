@@ -15,5 +15,5 @@ export default function Stack() {
       <StackNav.Screen name="Home" component={Home} />
       <StackNav.Screen name="Hotels" component={Hotels} />
     </StackNav.Navigator>
-  )
+  );
 }
