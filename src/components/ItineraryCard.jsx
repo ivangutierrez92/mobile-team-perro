@@ -1,7 +1,7 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import React, { useState } from "react";
 
-export default function Itinerary({ item }) {
+export default function ItineraryCard({ item }) {
   const [showComments, setShowComments] = useState(false);
   const toggleComments = () => {
     setShowComments(!showComments);
