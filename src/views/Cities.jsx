@@ -5,25 +5,26 @@ import cityActions from "../redux/actions/cityActions";
 import CityCard from "../components/CityCard";
 import BouncyCheckbox from "react-native-bouncy-checkbox";
 import SearchBar from "../components/SearchBar";
+import Separator from "../components/Separator";
 
-export default function Cities() {
+export default function Cities({navigation}) {
   const dispatch = useDispatch();
-  const { getInitialData } = cityActions;
   const { cities, initial } = useSelector(store => store.city);
+  const { getInitialData } = cityActions;
   useEffect(() => {
     if (initial) {
       dispatch(getInitialData({ endpoint: "/api/cities" }));
     }
   }, []);
-
+  
   return (
     <FlatList
       style={styles.listContainer}
       data={cities}
       keyExtractor={item => item._id}
-      renderItem={CityCard}
+      renderItem={({item}) => <CityCard item={item} navigation={navigation} />}
       ListHeaderComponent={Header}
-      ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
+      ItemSeparatorComponent={Separator}
     />
   );
 }
