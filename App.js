@@ -6,7 +6,6 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack />
-      <Text style={styles.container} />
     </NavigationContainer>
   );
 }
