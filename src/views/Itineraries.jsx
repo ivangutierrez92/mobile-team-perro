@@ -3,7 +3,8 @@ import { REACT_APP_API_URL } from "@env";
 import Separator from "../components/Separator";
 import Message from "../components/Message";
 import ItineraryCard from "../components/ItineraryCard";
-import { FlatList } from "react-native";
+import { FlatList, View } from "react-native";
+import axios from "axios";
 
 export default function Itineraries({ route }) {
   const [itineraries, setItineraries] = useState([]);
@@ -24,12 +25,15 @@ export default function Itineraries({ route }) {
     }
   };
   return (
-    <FlatList
-      data={itineraries}
-      ListEmptyComponent={<Message message={message} />}
-      renderItem={({ item }) => <ItineraryCard item={item} />}
-      keyExtractor={item => item._id}
-      ItemSeparatorComponent={Separator}
-    />
+    <View style={{ flex: 1 }}>
+      <FlatList
+        data={itineraries}
+        ListEmptyComponent={<Message message={message} />}
+        renderItem={({ item }) => <ItineraryCard item={item} />}
+        ListHeaderComponent={Separator}
+        keyExtractor={item => item._id}
+        ItemSeparatorComponent={Separator}
+      />
+    </View>
   );
 }
