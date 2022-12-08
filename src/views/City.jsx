@@ -5,13 +5,12 @@ import { REACT_APP_API_URL } from "@env";
 import AuthorCard from "../components/AuthorCard";
 import Message from "../components/Message";
 
-export default function City({ route }) {
+export default function City({ navigation, route }) {
   const { id } = route.params;
   const [city, setCity] = useState(null);
   useEffect(() => {
     getData();
   }, [id]);
-
   const [message, setMessage] = useState("...Loading");
 
   const getData = async () => {
@@ -23,6 +22,11 @@ export default function City({ route }) {
       setMessage(error.response.data.message || error.response.data || error.message);
     }
   };
+
+  const goTo = () => {
+    navigation.navigate("Itineraries", { id: city._id });
+  };
+
   return city ? (
     <View style={styles.container}>
       <Image source={{ uri: city.photo }} style={styles.cityImage} />
@@ -35,7 +39,7 @@ export default function City({ route }) {
         </Text>
       </View>
       <View style={styles.button}>
-        <Button color="#BC242C" title="See Itineraries!" />
+        <Button color="#BC242C" title="See Itineraries!" onPress={goTo} />
       </View>
     </View>
   ) : (

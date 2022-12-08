@@ -1,10 +1,29 @@
 import { View, Text, StyleSheet, Image, Pressable } from "react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import NewComment from "./NewComment";
+import { useDispatch, useSelector } from "react-redux";
+import commentsActions from "../redux/actions/commentsActions";
+import Comment from "./Comment";
+import Reaction from "./Reaction";
 
-export default function Itinerary({ item }) {
+export default function ItineraryCard({ item }) {
   const [showComments, setShowComments] = useState(false);
+  const user = useSelector(store => store.signIn);
+  let comments = useSelector(store => store.comments);
+  let reactions = useSelector(store => store.reactions);
+  const dispatch = useDispatch();
+  const { getInicialComments } = commentsActions;
+
+  useEffect(() => {
+    dispatch(getInicialComments({ id: item._id, query: { params: { itineraryId: item._id } } }));
+  }, []);
+
   const toggleComments = () => {
     setShowComments(!showComments);
+  };
+
+  const onReaction = (name, itineraryId) => {
+    dispatch(toggleReaction({ name, itineraryId, token: user.token }));
   };
   return (
     <View style={styles.container}>
@@ -23,6 +42,33 @@ export default function Itinerary({ item }) {
           <Text style={styles.buttonText}>Comments</Text>
         </Pressable>
       </View>
+      <View>{user.logged && <NewComment user={user} />}</View>
+      <View>
+        {comments.length &&
+          comments.map(comment => (
+            <Comment
+              comment={comment}
+              name={comment.userId.name || user.name}
+              isUser={user.id === (comment.userId._id || comment.userId)}
+            />
+          ))}
+      </View>
+
+      {reactions[item._id] && (
+        <View>
+          {reactions[item._id].map(reaction => (
+            <Reaction
+              key={reaction._id}
+              name={reaction.name}
+              icon={reaction.icon}
+              iconBack={reaction.iconBack}
+              reacted={reaction.reacted}
+              count={reaction.userId}
+              onReaction={() => onReaction(reaction.name, itinerary._id)}
+            />
+          ))}
+        </View>
+      )}
     </View>
   );
 }

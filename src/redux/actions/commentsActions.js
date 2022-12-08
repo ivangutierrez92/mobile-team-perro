@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import {REACT_APP_API_URL} from '@env';
 
 const getInicialComments = createAsyncThunk(
   "getInicialComments",
@@ -7,9 +8,8 @@ const getInicialComments = createAsyncThunk(
 
     try {
       const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}/api/comments`,query
+        `${REACT_APP_API_URL}/api/comments`,query
       );
-     console.log(response.data)
       return {
         id,
         success:true,
