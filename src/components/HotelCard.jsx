@@ -1,8 +1,12 @@
 import { View, Text, Image, Button, StyleSheet } from "react-native";
 import React from "react";
 
-export default function HotelCard({ item }) {
+export default function HotelCard({ item,navigation}) {
  
+  const goNavigate =()=>{
+
+    navigation.navigate("Hotel",{id:item._id})
+  }
 
   return (
     <View style={styles.container}>
@@ -12,7 +16,7 @@ export default function HotelCard({ item }) {
         <Text style={styles.contentText}>Capacity: {item.capacity}</Text>
         <Text style={styles.contentText}>City: {item.cityId.name}</Text>
       </View>
-      <Button color={"#107048"} style={styles.button} title="Details" />
+      <Button color={"#107048"} style={styles.button} title="Details"  onPress={goNavigate} />
     </View>
   );
 }

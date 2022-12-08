@@ -6,7 +6,7 @@ import HotelCard from "../components/HotelCard";
 import SearchBar from "../components/SearchBar";
 import { Picker } from "@react-native-picker/picker";
 
-export default function Hotels() {
+export default function Hotels({navigation}) {
   const dispatch = useDispatch();
   const { getHotelBefore } = hotelActions;
   let { hotelList, firstRender } = useSelector((store) => store.hotel);
@@ -22,7 +22,7 @@ export default function Hotels() {
       style={styles.listContainer}
       data={hotelList}
       keyExtractor={(item) => item._id}
-      renderItem={HotelCard}
+      renderItem={({item})=> <HotelCard item={item} navigation={navigation} />}
       ListHeaderComponent={Header}
       ItemSeparatorComponent={() => <View style={{ margin: 10 }} />}
     />
