@@ -1,23 +1,26 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { REACT_APP_API_URL } from "@env";
 
 const getHotelBefore = createAsyncThunk("getHotels", async () => {
-  let params={
-      params:{
-        order: "asc"
-      }
+  let params = {
+    params: {
+      order: "asc",
+    },
+  };
 
-
-  }
-  
   try {
-    const response = await axios.get(`${process.env.REACT_APP_API_URL}/api/hotels/`,params);
+    const response = await axios.get(
+      `${REACT_APP_API_URL}/api/hotels/`,
+      params
+    );
     return response.data.response;
   } catch (error) {
+
   }
 });
 
-const getHotelAfter = createAsyncThunk("getHotelAfter", async data => {
+const getHotelAfter = createAsyncThunk("getHotelAfter", async (data) => {
   let searchParams = {
     params: {
       name: data.name,
@@ -25,10 +28,13 @@ const getHotelAfter = createAsyncThunk("getHotelAfter", async data => {
     },
   };
   try {
-    const response = await axios.get(process.env.REACT_APP_API_URL + data.param, searchParams);
+    const response = await axios.get(
+      REACT_APP_API_URL + data.param,
+      searchParams
+    );
     return { data: response.data.response, name: data.name, order: data.order };
   } catch (error) {
-    throw error
+    throw error;
   }
 });
 

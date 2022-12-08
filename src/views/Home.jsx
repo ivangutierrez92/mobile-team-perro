@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import React from "react";
 
-export default function Home() {
+export default function Home({ navigation }) {
   return (
     <View style={styles.primerView}>
       <ImageBackground
@@ -33,7 +33,7 @@ export default function Home() {
               title="Explore Cities"
               color="#BC242C"
               onPress={() => {
-                Alert.alert("boton apretado");
+                navigation.navigate("Cities");
               }}
             />
             <Button
@@ -41,7 +41,7 @@ export default function Home() {
               title="Explore Hotels"
               color="#BC242C"
               onPress={() => {
-                Alert.alert("boton apretado");
+                navigation.navigate("Hotels");
               }}
             />
           </View>
