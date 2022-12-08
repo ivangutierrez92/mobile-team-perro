@@ -1,4 +1,5 @@
 import { createDrawerNavigator } from '@react-navigation/drawer';
+import Profile from '../views/Profile';
 import SignUp from '../views/SignUp';
 import Stack from './Stack';
 
@@ -8,7 +9,8 @@ function Drawer() {
   return (
     <DrawerNav.Navigator>
       <DrawerNav.Screen name="MyTinerary" component={Stack} />
-      <DrawerNav.Screen name="SignUp" component={SignUp} />
+      <DrawerNav.Screen name="Sign Up" component={SignUp} />
+      <DrawerNav.Screen name="Profile" component={Profile} />
     </DrawerNav.Navigator>
   );
 }
