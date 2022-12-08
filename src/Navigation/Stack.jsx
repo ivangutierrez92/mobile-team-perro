@@ -4,6 +4,7 @@ import City from "../views/City";
 import Home from "../views/Home";
 import Hotels from "../views/Hotels";
 import Hotel from "../views/Hotel";
+import Show from "../views/Show"
 import Itineraries from "../views/Itineraries";
 const StackNav = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ export default function Stack() {
       <StackNav.Screen name="Itineraries" component={Itineraries} />
       <StackNav.Screen name="Hotels" component={Hotels} />
       <StackNav.Screen name="Hotel" component={Hotel} />
+      <StackNav.Screen name="Show" component={Show} />
     </StackNav.Navigator>
   );
 }
