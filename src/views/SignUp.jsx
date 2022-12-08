@@ -13,8 +13,8 @@ export default function SignUp({ navigation }) {
       if (!response.data.success) {
         Alert.alert("Validation", response.data.message.join("\n \n"));
       } else {
+        resetForm();
         Alert.alert("Please verify your account in your email!");
-        resetForm({ values: initialValues() });
         navigation.navigate("MyTinerary");
       }
     } catch (error) {
