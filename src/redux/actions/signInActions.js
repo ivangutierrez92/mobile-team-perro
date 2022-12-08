@@ -1,9 +1,10 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import {REACT_APP_API_URL} from '@env';
 
 const sendData = createAsyncThunk("sendData", async data => {
   try {
-    let response = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/sign-in`, data);
+    let response = await axios.post(`${REACT_APP_API_URL}/api/auth/sign-in`, data);
 
     return response.data;
   } catch (error) {
@@ -18,7 +19,7 @@ const sendData = createAsyncThunk("sendData", async data => {
 const resendData = createAsyncThunk("resendData", async token => {
   let headers = { headers: { Authorization: `Bearer ${token}` } };
   try {
-    let user = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/token`, null, headers);
+    let user = await axios.post(`${REACT_APP_API_URL}/api/auth/token`, null, headers);
 
     return {
       response: user.data.response,
@@ -37,7 +38,7 @@ const resendData = createAsyncThunk("resendData", async token => {
 const signout = createAsyncThunk("signout", async token => {
   let headers = { headers: { Authorization: `Bearer ${token}` } };
   try {
-    let res = await axios.post(`${process.env.REACT_APP_API_URL}/api/auth/sign-out`, null, headers);
+    let res = await axios.post(`${REACT_APP_API_URL}/api/auth/sign-out`, null, headers);
     return res.data;
   } catch (error) {
     let message;
