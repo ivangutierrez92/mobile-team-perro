@@ -21,6 +21,18 @@ export default function Hotel({ navigation, route }) {
       });
   }, [id]);
 
+
+  const gotoNavigation =()=>{
+
+    navigation.navigate("Show",{id:id})
+
+
+
+  }
+
+
+
+
   return (
     <View style={styles.container}>
       <Image
@@ -41,7 +53,7 @@ export default function Hotel({ navigation, route }) {
         </Text>
       </View>
       <View style={styles.button}>
-        <Button color="#BC242C" title="SEE SHOWS!" />
+        <Button color="#BC242C" title="SEE SHOWS!" onPress={gotoNavigation}/>
       </View>
     </View>
   );
