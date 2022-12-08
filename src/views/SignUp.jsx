@@ -6,7 +6,7 @@ import { REACT_APP_API_URL } from "@env";
 import axios from "axios";
 
 export default function SignUp({ navigation }) {
-  const onSubmit = async formValue => {
+  const onSubmit = async (formValue, resetForm) => {
     formValue.role = "user";
     try {
       let response = await axios.post(`${REACT_APP_API_URL}/api/auth/sign-up`, formValue);
@@ -14,6 +14,7 @@ export default function SignUp({ navigation }) {
         Alert.alert("Validation", response.data.message.join("\n \n"));
       } else {
         Alert.alert("Please verify your account in your email!");
+        resetForm({ values: initialValues() });
         navigation.navigate("MyTinerary");
       }
     } catch (error) {
@@ -23,8 +24,8 @@ export default function SignUp({ navigation }) {
 
   const formik = useFormik({
     initialValues: initialValues(),
-    onSubmit: formValue => {
-      onSubmit(formValue);
+    onSubmit: (formValue, { resetForm }) => {
+      onSubmit(formValue, resetForm);
     },
   });
   return (
