@@ -1,7 +1,14 @@
-import { View, Text, Image, Button, StyleSheet } from "react-native";
 import React from "react";
+import { View, Text, Image, Button, StyleSheet } from "react-native";
 
-export default function CityCard({ item }) {
+
+export default function CityCard({ item, navigation }) {
+  
+  
+  const goTo = () => {
+    navigation.navigate("City", { id: item._id });
+  };
+
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{ uri: item.photo }} />
@@ -10,7 +17,7 @@ export default function CityCard({ item }) {
         <Text style={styles.contentText}>Continent: {item.continent}</Text>
         <Text style={styles.contentText}>Population: {item.population.toLocaleString()}</Text>
       </View>
-      <Button color={'#206045'} style={styles.button} title="See Itineraries!" />
+      <Button color="#206045" style={styles.button} title="Learn More!" onPress={goTo} />
     </View>
   );
 }
