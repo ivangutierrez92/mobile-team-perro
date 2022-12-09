@@ -4,7 +4,7 @@ import React from "react";
 export default function Reaction({ icon, iconBack, reacted, count, onReaction }) {
   return (
     <View style={styles.container}>
-      <Pressable onPress={onReaction}>
+      <Pressable style={styles.pressable} onPress={onReaction}>
         <Image style={styles.reactionImage} source={{ uri: reacted ? icon : iconBack }} />
         <Text>{count > 0 && count}</Text>
       </Pressable>
@@ -15,7 +15,9 @@ export default function Reaction({ icon, iconBack, reacted, count, onReaction })
 const styles = StyleSheet.create({
   container: {
     marginRight: 10,
-    borderRadius: 13,
+    borderRadius: 20,
+    padding: 5,
+    backgroundColor: 'white',
   },
   reactionImage: {
     width: 25,
@@ -26,4 +28,7 @@ const styles = StyleSheet.create({
   reactionNumber: {
     marginLeft: 3,
   },
+  pressable: {
+    flexDirection: 'row'
+  }
 });
