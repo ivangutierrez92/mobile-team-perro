@@ -2,6 +2,7 @@ import { View, Text, StyleSheet, Image, Pressable } from "react-native";
 import React, { useEffect, useState } from "react";
 import NewComment from "./NewComment";
 import { useDispatch, useSelector } from "react-redux";
+import reactionsActions from "../redux/actions/reactionsActions";
 import commentsActions from "../redux/actions/commentsActions";
 import Comment from "./Comment";
 import Reaction from "./Reaction";
@@ -13,6 +14,7 @@ export default function ItineraryCard({ item }) {
   let reactions = useSelector(store => store.reactions);
   const dispatch = useDispatch();
   const { getInicialComments, createComment } = commentsActions;
+  const { toggleReaction } = reactionsActions;
   useEffect(() => {
     dispatch(getInicialComments({ id: item._id, query: { params: { itineraryId: item._id } } }));
   }, []);
@@ -21,8 +23,8 @@ export default function ItineraryCard({ item }) {
     setShowComments(!showComments);
   };
 
-  const onReaction = (name, itineraryId) => {
-    dispatch(toggleReaction({ name, itineraryId, token: user.token }));
+  const onReaction = name => {
+    dispatch(toggleReaction({ name, itineraryId: item._id, token: user.token }));
   };
 
   const sendComment = textToSend => {
@@ -30,6 +32,7 @@ export default function ItineraryCard({ item }) {
     let newComment = { comment: textToSend, itineraryId: item._id };
     dispatch(createComment({ newComment, id: item._id, headers }));
   };
+
   return (
     <View style={styles.container}>
       <Image source={{ uri: item.photo[0] }} style={styles.image} />
@@ -73,7 +76,7 @@ export default function ItineraryCard({ item }) {
               iconBack={reaction.iconBack}
               reacted={reaction.reacted}
               count={reaction.userId}
-              onReaction={() => onReaction(reaction.name, itinerary._id)}
+              onReaction={() => onReaction(reaction.name)}
             />
           ))}
         </View>
@@ -127,8 +130,8 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   reactionContainer: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 15,
-    flexWrap: 'wrap'
-  }
+    flexWrap: "wrap",
+  },
 });
