@@ -1,18 +1,16 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Image } from "react-native";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Image } from "react-native-web";
 
-export default function Comment({ comment, name }) {
+export default function Comment({ comment, name, isUser }) {
   let date = comment.createdAt.split("T");
 
   return (
     <View style={styles.container}>
       <Image source={{ uri: comment.photo }} style={styles.image} />
-      <View style={styles.commentContainer}>
+      <View style={[styles.commentContainer, { backgroundColor: isUser ? "#406483" : "#107048" }]}>
         <View style={styles.commentInfo}>
-          <Text>{name}</Text>
-          <Text>Date: {date[0]}</Text>
+          <Text style={styles.name}>{name}</Text>
+          <Text style={styles.date}> Date: {date[0]}</Text>
         </View>
         <View>
           <Text style={styles.comment}>{comment.comment}</Text>
@@ -25,6 +23,8 @@ export default function Comment({ comment, name }) {
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
+    marginVertical: 10,
+    width: "100%",
   },
   image: {
     width: 30,
@@ -33,12 +33,29 @@ const styles = StyleSheet.create({
     resizeMode: "contain",
   },
   commentContainer: {
-    backgroundColor: "#107048",
+    marginLeft: 10,
+    flex: 1,
+    borderTopRightRadius: 10,
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+    paddingHorizontal: 10,
+    paddingVertical: 5,
   },
   commentInfo: {
     flexDirection: "row",
+    marginBottom: 3,
+    justifyContent: "space-between",
+  },
+  name: {
+    marginRight: 10,
+    color: "white",
+    fontWeight: "bold",
+  },
+  date: {
+    color: "white",
+    fontSize: 12,
   },
   comment: {
-    flex: 1,
+    color: "white",
   },
 });

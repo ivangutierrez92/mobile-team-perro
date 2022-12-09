@@ -31,7 +31,7 @@ const getInicialComments = createAsyncThunk(
 const createComment= createAsyncThunk("createComment",async({newComment,headers,id})=>{
 
   try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/comments`,newComment,headers)
+      const response = await axios.post(`${REACT_APP_API_URL}/api/comments`,newComment,headers)
       console.log(response.data)
       return {
       success: true,

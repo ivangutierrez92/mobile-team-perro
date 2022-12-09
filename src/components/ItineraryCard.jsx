@@ -12,7 +12,7 @@ export default function ItineraryCard({ item }) {
   let comments = useSelector(store => store.comments);
   let reactions = useSelector(store => store.reactions);
   const dispatch = useDispatch();
-  const { getInicialComments } = commentsActions;
+  const { getInicialComments, createComment } = commentsActions;
 
   useEffect(() => {
     dispatch(getInicialComments({ id: item._id, query: { params: { itineraryId: item._id } } }));
@@ -24,6 +24,12 @@ export default function ItineraryCard({ item }) {
 
   const onReaction = (name, itineraryId) => {
     dispatch(toggleReaction({ name, itineraryId, token: user.token }));
+  };
+
+  const sendComment = textToSend => {
+    let headers = { headers: { Authorization: `Bearer ${user.token}` } };
+    let newComment = { comment: textToSend, itineraryId: item._id };
+    dispatch(createComment({ newComment, id: item._id, headers }));
   };
   return (
     <View style={styles.container}>
@@ -42,17 +48,21 @@ export default function ItineraryCard({ item }) {
           <Text style={styles.buttonText}>Comments</Text>
         </Pressable>
       </View>
-      <View>{user.logged && <NewComment user={user} />}</View>
-      <View>
-        {comments.length &&
-          comments.map(comment => (
-            <Comment
-              comment={comment}
-              name={comment.userId.name || user.name}
-              isUser={user.id === (comment.userId._id || comment.userId)}
-            />
-          ))}
-      </View>
+      {showComments && (
+        <>
+          <View>{user.logged && <NewComment user={user} sendComment={sendComment} />}</View>
+          <View>
+            {comments[item._id]?.map(comment => (
+              <Comment
+                key={comment._id}
+                comment={comment}
+                name={comment.userId.name || user.name}
+                isUser={user.id === (comment.userId._id || comment.userId)}
+              />
+            ))}
+          </View>
+        </>
+      )}
 
       {reactions[item._id] && (
         <View>
