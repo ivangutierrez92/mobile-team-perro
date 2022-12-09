@@ -14,23 +14,29 @@ const initialState = {
 
 const signInReducer= createReducer(initialState,(builder)=>{
   builder
-  .addCase(sendData.fulfilled, (state, action)=>{
+  .addCase(sendData.fulfilled,(state, action)=>{
     const{success,response}= action.payload
     
    if(success){
-     let { user, token } = response;
-     localStorage.setItem("token", JSON.stringify({token: {user:token}}));
-    let newState={
-      ...state,
-      id: user._id,
-      name:user.name,
-      photo:user.photo,
-      logged:true,
-      role:user.role,
-      token:token
-    }
- 
+    // try {
+       let { user, token } = response;
+    
+       let newState = {
+         ...state,
+         id: user._id,
+         name: user.name,
+         photo: user.photo,
+         logged: true,
+         role: user.role,
+         token: token,
+       };
     return newState;
+
+    // } catch (error) {
+      
+    // }
+    
+ 
    }
    
   })
