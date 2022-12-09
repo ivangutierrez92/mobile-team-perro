@@ -1,16 +1,33 @@
 import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
-import { useDispatch, useSelector } from "react-redux";
 import MyReactions from "../views/MyReactions";
 import Profile from "../views/Profile";
 import SignUp from "../views/SignUp";
+import SignIn from "../views/SignIn";
 import Stack from "./Stack";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import signInActions from "../redux/actions/signInActions";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+
 const DrawerNav = createDrawerNavigator();
 
 function Drawer() {
-  const user = useSelector(store => store.signIn);
+  let dispatch = useDispatch();
+  let { resendData } = signInActions;
   const { signout } = signInActions;
-  const dispatch = useDispatch();
+  let user = useSelector(store => store.signIn);
+
+  useEffect(() => {
+    const isLogged = async () => {
+      let token = await AsyncStorage.getItem("token");
+      token = token ? JSON.parse(token) : null;
+      if (token) {
+        dispatch(resendData(token.token.user));
+      }
+    };
+    isLogged();
+  }, []);
+
   return (
     <DrawerNav.Navigator
       drawerContent={props => {
@@ -29,10 +46,12 @@ function Drawer() {
         );
       }}
     >
-
       <DrawerNav.Screen name="MyTinerary" component={Stack} />
       {!user.logged && (
-        <DrawerNav.Screen name="Sign Up" component={SignUp} />
+        <>
+          <DrawerNav.Screen name="Sign Up" component={SignUp} />
+          <DrawerNav.Screen name="SignIn" component={SignIn} />
+        </>
       )}
       {user.logged && (
         <>
