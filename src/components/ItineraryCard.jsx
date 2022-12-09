@@ -13,7 +13,6 @@ export default function ItineraryCard({ item }) {
   let reactions = useSelector(store => store.reactions);
   const dispatch = useDispatch();
   const { getInicialComments, createComment } = commentsActions;
-
   useEffect(() => {
     dispatch(getInicialComments({ id: item._id, query: { params: { itineraryId: item._id } } }));
   }, []);
@@ -65,7 +64,7 @@ export default function ItineraryCard({ item }) {
       )}
 
       {reactions[item._id] && (
-        <View>
+        <View style={styles.reactionContainer}>
           {reactions[item._id].map(reaction => (
             <Reaction
               key={reaction._id}
@@ -127,4 +126,9 @@ const styles = StyleSheet.create({
     color: "white",
     textAlign: "center",
   },
+  reactionContainer: {
+    flexDirection: 'row',
+    marginTop: 15,
+    flexWrap: 'wrap'
+  }
 });
