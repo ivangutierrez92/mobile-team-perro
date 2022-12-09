@@ -1,5 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { REACT_APP_API_URL } from "@env";
 
 const getInitialMyTineraries = createAsyncThunk("getInitialMyTineraries", async data => {
   let query = {
@@ -8,7 +9,7 @@ const getInitialMyTineraries = createAsyncThunk("getInitialMyTineraries", async 
     },
   };
   try {
-    const res = await axios.get(process.env.REACT_APP_API_URL + data.endpoint, query);
+    const res = await axios.get(REACT_APP_API_URL + data.endpoint, query);
     return res.data.response;
   } catch (error) {
     if (error.response) {
@@ -22,7 +23,7 @@ const getInitialMyTineraries = createAsyncThunk("getInitialMyTineraries", async 
 const deleteItinerary = createAsyncThunk("deleteItinerary", async data => {
   let headers = { headers: { Authorization: `Bearer ${data.token}` } };
   try {
-    const res = await axios.delete(process.env.REACT_APP_API_URL + data.endpoint + data.itineraryId, headers);
+    const res = await axios.delete(REACT_APP_API_URL + data.endpoint + data.itineraryId, headers);
     return { success: true, id: res.data.id };
   } catch (error) {
     if (error.response) {
