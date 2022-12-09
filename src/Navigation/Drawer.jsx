@@ -41,7 +41,7 @@ function Drawer() {
 
   return (
     <DrawerNav.Navigator
-      drawerContent={props => {
+      drawerContent={(props) => {
         return (
           <DrawerContentScrollView {...props}>
             <DrawerItemList {...props} />

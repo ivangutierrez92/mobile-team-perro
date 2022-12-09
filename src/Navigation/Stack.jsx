@@ -6,6 +6,8 @@ import Hotels from "../views/Hotels";
 import Hotel from "../views/Hotel";
 import Show from "../views/Show"
 import Itineraries from "../views/Itineraries";
+import EditProfile from "../views/EditProfile";
+
 const StackNav = createNativeStackNavigator();
 
 export default function Stack() {
@@ -18,6 +20,9 @@ export default function Stack() {
       <StackNav.Screen name="Hotels" component={Hotels} />
       <StackNav.Screen name="Hotel" component={Hotel} />
       <StackNav.Screen name="Show" component={Show} />
+      <StackNav.Screen name="EditProfile" component={EditProfile} />
+
+
     </StackNav.Navigator>
   );
 }

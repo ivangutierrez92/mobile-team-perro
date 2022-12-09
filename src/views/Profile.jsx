@@ -5,14 +5,14 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import { REACT_APP_API_URL } from "@env";
 
-export default function Profile() {
+export default function Profile({navigation}) {
   const [user, setUser] = useState(null);
   const [message, setMessage] = useState("...Loading");
   const signInUser = useSelector(store => store.signIn);
   
   useEffect(() => {
     onLoading();
-  }, []);
+  }, [user]);
 
   const onLoading = async () => {
     let headers = { headers: { Authorization: `Bearer ${signInUser.token}` } };
@@ -27,6 +27,11 @@ export default function Profile() {
       }
     }
   };
+
+  const goNavigation = ()=>{
+    navigation.navigate("EditProfile")
+  }
+
   return user ? (
     <View style={styles.container}>
       <Image style={styles.image} source={{ uri: user.photo }} />
@@ -35,7 +40,7 @@ export default function Profile() {
       </Text>
       <Text style={styles.text}>Email: {user.email}</Text>
       <Text style={styles.text}>Age: {user.age}</Text>
-      <Button color="#BC242C" title="Edit Profile" />
+      <Button color="#BC242C" title="Edit Profile"  onPress={goNavigation} />
     </View>
   ) : (
     <Message message={message} />
