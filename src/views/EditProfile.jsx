@@ -27,48 +27,37 @@ export default function EditProfile() {
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
-        name: getUser?.name,
-        lastName: getUser?.lastName,
-        photo: getUser?.photo,
-        age: getUser?.age,
-    
-      },
+      name: getUser?.name,
+      lastName: getUser?.lastName,
+      photo: getUser?.photo,
+      age: getUser?.age,
+    },
     onSubmit: (formValue) => {
       onSubmit(formValue);
     },
   });
 
-
   const onSubmit = (formValue) => {
     let headers = { headers: { Authorization: `Bearer ${user.token}` } };
-     axios
-       .patch(
-         `${process.env.REACT_APP_API_URL}/api/auth/me/${user.id}`,
-         formValue,
-         headers
-       )
-       .then((response) => {
-          // navigation.navigate("MyTinerary");
+    axios
+      .patch(
+        `${process.env.REACT_APP_API_URL}/api/auth/me/${user.id}`,
+        formValue,
+        headers
+      )
+      .then((response) => {
+        // navigation.navigate("MyTinerary");
 
-         Alert.alert(
-           
-           "Your profile has been updated successfully",
-           
-         );
-       })
-       .catch((error) => {
-         Alert.alert(
-           "Error updating your profile",
-           error.response.data.message,
-           "error"
-         );
-       });
-      
-
-
-
-
-  }
+        Alert.alert("Your profile has been updated successfully");
+      })
+      .catch((error) => {
+        Alert.alert(
+          "Error updating your profile",
+          error.response.data.message,
+          "error"
+        );
+      });
+  };
 
   return (
     <>
@@ -113,7 +102,6 @@ export default function EditProfile() {
     </>
   );
 }
-
 
 const styles = StyleSheet.create({
   container: {
