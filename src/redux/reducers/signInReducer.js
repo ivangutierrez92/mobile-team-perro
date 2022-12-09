@@ -69,7 +69,6 @@ const signInReducer= createReducer(initialState,(builder)=>{
   .addCase(signout.fulfilled, (state, action) => {
     const {success} = action.payload;
     if(success) {
-      localStorage.removeItem('token');
       return {
         ...state,
         id:"", 

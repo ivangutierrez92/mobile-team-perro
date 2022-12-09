@@ -28,6 +28,17 @@ function Drawer() {
     isLogged();
   }, []);
 
+  const signOutFunc = async() => {
+    try {
+      let res = await dispatch(signout(user.token)).unwrap();
+      if(res.success) {
+        await AsyncStorage.removeItem('token');
+      }
+    }catch(error) {
+
+    }
+  }
+
   return (
     <DrawerNav.Navigator
       drawerContent={props => {
@@ -38,7 +49,7 @@ function Drawer() {
               <DrawerItem
                 label="Logout"
                 onPress={() => {
-                  dispatch(signout(user.token));
+                  signOutFunc();
                 }}
               />
             )}

@@ -1,10 +1,10 @@
-import { View, Text, StyleSheet } from "react-native";
+import {ScrollView, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { ScrollView } from "react-native-web";
 import Title from "../components/Title";
 import ReactionCard from "../components/ReactionCard";
 import reactionColors from "../data/reactionColors";
+import myReactionsActions from "../redux/actions/myReactionsActions"
 
 export default function MyReactions() {
   let { getMyReactions } = myReactionsActions;
@@ -28,6 +28,7 @@ export default function MyReactions() {
                   <Title title={key} style={styles.title} />
                   {reactions[key].map(reaction => (
                     <ReactionCard
+                      key={reaction._id}
                       background={reactionColors[key]}
                       name={reaction.itineraryId ? reaction.itineraryId.name : reaction.showId.name}
                       photo={reaction.itineraryId ? reaction.itineraryId.photo[0] : reaction.showId.photo}
