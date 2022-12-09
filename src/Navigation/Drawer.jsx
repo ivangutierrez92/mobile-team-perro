@@ -1,4 +1,5 @@
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import { createDrawerNavigator, DrawerContentScrollView, DrawerItem, DrawerItemList } from "@react-navigation/drawer";
+import MyReactions from "../views/MyReactions";
 import Profile from "../views/Profile";
 import SignUp from "../views/SignUp";
 import SignIn from "../views/SignIn";
@@ -13,8 +14,8 @@ const DrawerNav = createDrawerNavigator();
 function Drawer() {
   let dispatch = useDispatch();
   let { resendData } = signInActions;
-
-  let user = useSelector((store) => store.signIn);
+  const { signout } = signInActions;
+  let user = useSelector(store => store.signIn);
 
   useEffect(() => {
     const isLogged = async () => {
@@ -27,12 +28,48 @@ function Drawer() {
     isLogged();
   }, []);
 
+  const signOutFunc = async() => {
+    try {
+      let res = await dispatch(signout(user.token)).unwrap();
+      if(res.success) {
+        await AsyncStorage.removeItem('token');
+      }
+    }catch(error) {
+
+    }
+  }
+
   return (
-    <DrawerNav.Navigator>
+    <DrawerNav.Navigator
+      drawerContent={props => {
+        return (
+          <DrawerContentScrollView {...props}>
+            <DrawerItemList {...props} />
+            {user.logged && (
+              <DrawerItem
+                label="Logout"
+                onPress={() => {
+                  signOutFunc();
+                }}
+              />
+            )}
+          </DrawerContentScrollView>
+        );
+      }}
+    >
       <DrawerNav.Screen name="MyTinerary" component={Stack} />
-      <DrawerNav.Screen name="Sign Up" component={SignUp} />
-      <DrawerNav.Screen name="Profile" component={Profile} />
-      <DrawerNav.Screen name="SignIn" component={SignIn} />
+      {!user.logged && (
+        <>
+          <DrawerNav.Screen name="Sign Up" component={SignUp} />
+          <DrawerNav.Screen name="SignIn" component={SignIn} />
+        </>
+      )}
+      {user.logged && (
+        <>
+          <DrawerNav.Screen name="Profile" component={Profile} />
+          <DrawerNav.Screen name="My Reactions" component={MyReactions} />
+        </>
+      )}
     </DrawerNav.Navigator>
   );
 }

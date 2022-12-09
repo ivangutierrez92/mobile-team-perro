@@ -1,12 +1,13 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { REACT_APP_API_URL } from "@env";
 
 const getReactions = createAsyncThunk("getReactions", async data => {
   let headers = { headers: { Authorization: `Bearer ${data.token}` } };
   try {
     let res = {};
     for (let itinerary of data.itineraries) {
-      let reaction = await axios.get(`${process.env.REACT_APP_API_URL}/api/reactions?itineraryId=${itinerary._id}`, headers);
+      let reaction = await axios.get(`${REACT_APP_API_URL}/api/reactions?itineraryId=${itinerary._id}`, headers);
       res[itinerary._id] = reaction.data.response;
     }
     return { success: true, response: res };
@@ -24,7 +25,7 @@ const getShowsReactions = createAsyncThunk("getShowsReactions", async data => {
   try {
     let res = {};
     for (let show of data.shows) {
-      let reaction = await axios.get(`${process.env.REACT_APP_API_URL}/api/reactions?showId=${show._id}`, headers);
+      let reaction = await axios.get(`${REACT_APP_API_URL}/api/reactions?showId=${show._id}`, headers);
       res[show._id] = reaction.data.response;
     }
     return { success: true, response: res };
@@ -41,7 +42,7 @@ const toggleReaction = createAsyncThunk("toggleReaction", async data => {
   let headers = { headers: { Authorization: `Bearer ${data.token}` } };
   try {
     let res = await axios.put(
-      `${process.env.REACT_APP_API_URL}/api/reactions?name=${data.name}&itineraryId=${data.itineraryId}`,
+      `${REACT_APP_API_URL}/api/reactions?name=${data.name}&itineraryId=${data.itineraryId}`,
       null,
       headers
     );
@@ -59,7 +60,7 @@ const toggleShowReactions = createAsyncThunk("toggleShowReactions", async data =
   let headers = { headers: { Authorization: `Bearer ${data.token}` } };
   try {
     let res = await axios.put(
-      `${process.env.REACT_APP_API_URL}/api/reactions?name=${data.name}&showId=${data.showId}`,
+      `${REACT_APP_API_URL}/api/reactions?name=${data.name}&showId=${data.showId}`,
       null,
       headers
     );
